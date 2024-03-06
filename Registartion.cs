@@ -78,11 +78,13 @@ public class Registration
                 Console.WriteLine("You have successfully registered!");
                 File file = new File();
                 file.Writer(Name, Surname, PhoneNumber, Email, Password);
-                break; 
+                break;
             }
             else
             {
-                // Здесь код для входа пользователя в аккаунт.
+                File File = new File();
+                File.Reader();
+
             }
         }
     }
