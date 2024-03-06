@@ -30,24 +30,21 @@ public class File
                 string line;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    string[] parts=line.Split(',');
-                    if (parts[4]==email)
+                    string[] parts = line.Split(',');
+                    if (parts[3] == email)
                     {
                         Console.WriteLine("Enter your password!");
                         string password = Console.ReadLine();
-                        if (parts[5]==password)
+                        if (parts[4] == password)
                         {
                             Console.WriteLine("You are logged in!");
+                            return;
                         }
                         else
                         {
-                            Console.WriteLine("Invalid password! Try again");
+                            Console.WriteLine("Invalid password!");
+                            return;
                         }
-                    
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid email! Try again");
                     }
                 }
             }
