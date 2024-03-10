@@ -5,7 +5,9 @@ public class Registration
 {
     public void Method1()
     {
+        string path = @"C:\Users\Admin\source\repos\ConsoleApp1\ConsoleApp1\Accounts.csv";
         string Name, Surname, PhoneNumber, Email, Password, Password2;
+        
         Console.WriteLine("Welcome to the store \"Name\". To continue working, you must log in to your account.");
         Console.WriteLine("Don't have an account? Register!");
         Console.WriteLine();
@@ -34,7 +36,40 @@ public class Registration
                         Console.WriteLine("Invalid surname. Try again!");
                     }
                 } while (!Regex.IsMatch(Surname, @"^[a-zA-Z]+$"));
+                while (true)
+                {
+                    bool emailExists = false;
+                    Console.WriteLine("Enter your email: ");
+                    Email = Console.ReadLine();
+                    using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
+                    {
+                        string line;
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            string[] parts = line.Split(',');
+                            if (parts.Length > 3 && parts[3] == Email)
+                            {
+                                Console.WriteLine("This email is already in use. \r\nDo you want to cancel your registration?");
+                                string choice = Console.ReadLine();
+                                if (choice.ToLower() == "yes")
+                                {
+                                    return;
+                                }   
+                                emailExists = true;
+                                break;
+                            }
+                        }
+                    }
 
+                    if (!emailExists && Regex.IsMatch(Email, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
+                    {
+                        break; 
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid email address. Try again!");
+                    }
+                } 
                 do
                 {
                     Console.WriteLine("Enter your phone number: ");
@@ -44,17 +79,6 @@ public class Registration
                         Console.WriteLine("Invalid phone number. Try again!");
                     }
                 } while (!Regex.IsMatch(PhoneNumber, @"^\+\d+$"));
-
-                do
-                {
-                    Console.WriteLine("Enter your email: ");
-                    Email = Console.ReadLine();
-                    if (!Regex.IsMatch(Email, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
-                    {
-                        Console.WriteLine("Invalid email address. Try again!");
-                    }
-                } while (!Regex.IsMatch(Email, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"));
-
                 do
                 {
                     Console.WriteLine("Enter your password: ");
@@ -83,7 +107,7 @@ public class Registration
             else
             {
                 File File = new File();
-                File.Reader();
+                File.ReaderForLogin();
 
             }
         }
