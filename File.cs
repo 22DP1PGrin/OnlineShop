@@ -18,35 +18,52 @@ public class File
             Console.WriteLine(e.Message);
         }
     }
-    public void Reader()
+    public void ReaderForLogin()
     {
         Console.WriteLine("Enter your email!");
         string email = Console.ReadLine();
         string path = @"C:\Users\pgrin\source\repos\ConsoleApp3\ConsoleApp3\Accounts.csv";
+        
         try
         {
             using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
             {
                 string line;
+                bool emailExists = false;
                 while ((line = sr.ReadLine()) != null)
                 {
+
                     string[] parts = line.Split(',');
-                    if (parts[3] == email)
+                    
+                    if(parts.Contains(email))
                     {
+
                         Console.WriteLine("Enter your password!");
                         string password = Console.ReadLine();
-                        if (parts[4] == password)
+                        if (parts.Contains(password))
                         {
-                            Console.WriteLine("You are logged in!");
-                            return;
+                            //Console.WriteLine("You are logged in!");
+                            emailExists = true;
+                            
                         }
                         else
                         {
-                            Console.WriteLine("Invalid password!");
-                            return;
+                            //Console.WriteLine("Invalid password!");
+                            emailExists = true;
                         }
                     }
+                    
                 }
+                if (!emailExists)
+                {
+                    Console.WriteLine("Invalid password or email. Try again.");
+                }
+                else
+                {
+                    
+                    Console.WriteLine("You are logged in!");
+                }
+
             }
         }
         catch (Exception e)
