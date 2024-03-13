@@ -5,9 +5,9 @@ public class Registration
 {
     public void Method1()
     {
-        string path = @"C:\Users\Admin\source\repos\ConsoleApp1\ConsoleApp1\Accounts.csv";
+        string path = @"C:\Users\pgrin\source\repos\ConsoleApp3\ConsoleApp3\Accounts.csv";
         string Name, Surname, PhoneNumber, Email, Password, Password2;
-        
+
         Console.WriteLine("Welcome to the store \"Name\". To continue working, you must log in to your account.");
         Console.WriteLine("Don't have an account? Register!");
         Console.WriteLine();
@@ -54,7 +54,7 @@ public class Registration
                                 if (choice.ToLower() == "yes")
                                 {
                                     return;
-                                }   
+                                }
                                 emailExists = true;
                                 break;
                             }
@@ -63,13 +63,13 @@ public class Registration
 
                     if (!emailExists && Regex.IsMatch(Email, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
                     {
-                        break; 
+                        break;
                     }
                     else
                     {
                         Console.WriteLine("Invalid email address. Try again!");
                     }
-                } 
+                }
                 do
                 {
                     Console.WriteLine("Enter your phone number: ");
@@ -102,12 +102,12 @@ public class Registration
                 Console.WriteLine("You have successfully registered!");
                 File file = new File();
                 file.Writer(Name, Surname, PhoneNumber, Email, Password);
-                break;
             }
             else
             {
                 File File = new File();
                 File.ReaderForLogin();
+                break;
 
             }
         }
