@@ -35,7 +35,37 @@ public class Store
     }
 
        public void DisplayStore()
-       {
-         // ...
-       }
+    {
+        while (true)
+        {
+            Console.WriteLine("\nPlease choose an action:");
+            Console.WriteLine("1. Enter credit card data");
+            Console.WriteLine("2. Display categories");
+            Console.WriteLine("3. Display cart");
+            Console.WriteLine("4. Exit");
+
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    /*card.EnterCreditCardData();
+                    card.SetBalance();
+                    CardDataWriter.WriteToFile(card, "card_data.txt");
+                    break;*/
+                case "2":
+                    DisplayCategories();
+                    break;
+                case "3":
+                    ShoppingCart.DisplayCart();
+                    break;
+                case "4":
+                    Console.WriteLine("Thank you for using our store. Goodbye!");
+                    return;
+                default:
+                    Console.WriteLine("Invalid choice. Please enter a valid option.");
+                    break;
+            }
+        }
+    }
 }
