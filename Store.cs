@@ -21,6 +21,8 @@ public class Store
         electronics.AddProduct(new Product("Headphones", 89.99));
         electronics.AddProduct(new Product("Tablet", 299.99));
         electronics.AddProduct(new Product("Keyboard", 24.99));
+        electronics.AddProduct(new Product("Speakers", 29.99));
+        
 
         Category homeAppliances = new Category("Home Appliances");
         homeAppliances.AddProduct(new Product("Refrigerator", 328.99));
@@ -28,10 +30,26 @@ public class Store
         homeAppliances.AddProduct(new Product("Microwave", 149.99));
         homeAppliances.AddProduct(new Product("Blender", 29.99));
 
+        Category furniture = new Category("Furniture");
+        furniture.AddProduct(new Product("Office chair", 49.99));
+        furniture.AddProduct(new Product("Gaming chair", 299.99));
+        furniture.AddProduct(new Product("Computer table", 129.99));
+        furniture.AddProduct(new Product("Sofa", 349.99));
+        furniture.AddProduct(new Product("Bed", 219.99));
+        furniture.AddProduct(new Product("Closet", 324.99));
+        furniture.AddProduct(new Product("Shelf", 89.99));
+        
+                             
+        
+                              
+
+        
+
 
         categories.Add(clothing);
         categories.Add(electronics);
         categories.Add(homeAppliances);
+        categories.Add(furniture);
     }
 
        public void DisplayStore()
