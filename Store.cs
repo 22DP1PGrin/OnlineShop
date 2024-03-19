@@ -23,7 +23,6 @@ public class Store
         electronics.AddProduct(new Product("Keyboard", 24.99));
         electronics.AddProduct(new Product("Speakers", 29.99));
         
-
         Category homeAppliances = new Category("Home Appliances");
         homeAppliances.AddProduct(new Product("Refrigerator", 328.99));
         homeAppliances.AddProduct(new Product("Washing Machine", 559.99));
@@ -38,18 +37,22 @@ public class Store
         furniture.AddProduct(new Product("Bed", 219.99));
         furniture.AddProduct(new Product("Closet", 324.99));
         furniture.AddProduct(new Product("Shelf", 89.99));
-        
-                             
-        
-                              
 
+        Category entertainment = new Category("Hobby and entertainment");
+        entertainment.AddProduct(new Product("Football ball", 14.99));
+        entertainment.AddProduct(new Product("Chess", 9.99));
+        entertainment.AddProduct(new Product("Fishing rod", 29.99));
+        entertainment.AddProduct(new Product("Color pencils", 6.99));
+        entertainment.AddProduct(new Product("Anime figure", 39.99));
+        entertainment.AddProduct(new Product("Bycycle", 199.99));
+        entertainment.AddProduct(new Product("C# programming book", 11.99));
         
-
 
         categories.Add(clothing);
         categories.Add(electronics);
         categories.Add(homeAppliances);
         categories.Add(furniture);
+        categories.Add(entertainment);
     }
 
        public void DisplayStore()
@@ -67,8 +70,8 @@ public class Store
             switch (choice)
             {
                 case "1":
-                    card.EnterCreditCardData();
-                    card.SetBalance();
+                    Card.EnterCreditCardData();
+                    Card.SetBalance();
                     CardDataWriter.WriteToFile(card, "card_data.txt");
                     break;
                 case "2":
