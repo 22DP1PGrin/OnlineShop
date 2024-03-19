@@ -1,4 +1,6 @@
-uusing System;
+using System;
+using System.Text;
+using System.IO;
 
 public class File
 {
@@ -72,6 +74,24 @@ public class File
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
+        }
+    }
+    public void Accounts()
+    {
+        string path = @"C:\Users\pgrin\source\repos\Eksamens\ConsoleApp3\Accounts.csv";
+        using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
+        {
+            string line;
+            while ((line = sr.ReadLine()) != null)
+            {
+                string[] parts = line.Split(',');
+                string email = parts[3];
+                string fileName = $"{email}.csv";
+                if (!File.Exists(fileName))
+                {
+                    using (StreamWriter sw = File.CreateText(fileName)) { }
+                }
+
         }
     }
 }
