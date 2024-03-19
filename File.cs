@@ -1,10 +1,10 @@
-using System.IO;
+uusing System;
 
 public class File
 {
     public void Writer(string Name, string Surname, string PhoneNumber, string Email, string Password)
     {
-        string path = @"C:\Users\pgrin\source\repos\ConsoleApp3\ConsoleApp3\Accounts.csv";
+        string path = @"C:\Users\pgrin\source\repos\Eksamens\ConsoleApp3\Accounts.csv";
         try
         {
             using (StreamWriter sw = new StreamWriter(path, true, System.Text.Encoding.Default))
@@ -22,14 +22,14 @@ public class File
     {
         Console.WriteLine("Enter your email!");
         string email = Console.ReadLine();
-        string path = @"C:\Users\pgrin\source\repos\ConsoleApp3\ConsoleApp3\Accounts.csv";
+        string path = @"C:\Users\pgrin\source\repos\Eksamens\ConsoleApp3\Accounts.csv";
         
         try
         {
             using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
             {
                 string line;
-                bool emailExists = false;
+                bool paroleExists = false;
                 while ((line = sr.ReadLine()) != null)
                 {
 
@@ -37,26 +37,29 @@ public class File
                     
                     if(parts.Contains(email))
                     {
-
                         Console.WriteLine("Enter your password!");
                         string password = Console.ReadLine();
                         if (parts.Contains(password))
                         {
                             //Console.WriteLine("You are logged in!");
-                            emailExists = true;
+                            paroleExists = true;
                             
                         }
                         else
                         {
                             //Console.WriteLine("Invalid password!");
-                            emailExists = true;
+                            paroleExists = false;
                         }
                     }
                     
                 }
-                if (!emailExists)
+
+
+                if (!paroleExists)
                 {
-                    Console.WriteLine("Invalid password or email. Try again.");
+                    Console.WriteLine("Invalid email or password. Try again!");
+                    Registration obj = new Registration();
+                    obj.Method1();
                 }
                 else
                 {
