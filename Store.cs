@@ -49,10 +49,10 @@ public class Store
             switch (choice)
             {
                 case "1":
-                    /*card.EnterCreditCardData();
+                    card.EnterCreditCardData();
                     card.SetBalance();
                     CardDataWriter.WriteToFile(card, "card_data.txt");
-                    break;*/
+                    break;
                 case "2":
                     DisplayCategories();
                     break;
