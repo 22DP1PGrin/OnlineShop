@@ -78,7 +78,7 @@ public class File
     }
     public void Accounts()
     {
-        string path = @"C:\Users\pgrin\source\repos\Eksamens\ConsoleApp3\Accounts.csv";
+        string path = @"C:\Users\Admin\source\repos\Eksamens\Eksamens\Accounts.csv";
         using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
         {
             string line;
@@ -87,11 +87,16 @@ public class File
                 string[] parts = line.Split(',');
                 string email = parts[3];
                 string fileName = $"{email}.csv";
-                if (!File.Exists(fileName))
+                string fullFilePath = Path.Combine(@"C:\Users\Admin\source\repos\Eksamens\Eksamens\Accounts", fileName);
+                FileInfo fileInf = new FileInfo(fullFilePath);
+                
+                if (!fileInf.Exists)
                 {
-                    using (StreamWriter sw = File.CreateText(fileName)) { }
+                    using (FileStream fs = fileInf.Create())
+                    {
+                    }
                 }
-
+            }
         }
     }
 }
