@@ -5,7 +5,8 @@ public class Registration
 {
     public void Method1()
     {
-        string path = @"C:\Users\pgrin\source\repos\ConsoleApp3\ConsoleApp3\Accounts.csv";
+        string path = @"C:\Users\pgrin\source\repos\Eksamens\ConsoleApp3\Accounts.csv";
+        //string path = @"C:\Users\Admin\source\repos\Eksamens\Eksamens\Accounts.csv";
         string Name, Surname, PhoneNumber, Email, Password, Password2;
 
         Console.WriteLine("Welcome to the store \"Name\". To continue working, you must log in to your account.");
@@ -102,12 +103,20 @@ public class Registration
                 Console.WriteLine("You have successfully registered!");
                 File file = new File();
                 file.Writer(Name, Surname, PhoneNumber, Email, Password);
+                file.Accounts();
             }
-            else
-            {
-                File File = new File();
-                File.ReaderForLogin();
-                break;
+            else { 
+                if(Choice.ToLower() == "log in")
+                {
+                    File File = new File();
+                    File.ReaderForLogin();
+                    File.Accounts();
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid command. Try again!");
+                }
 
             }
         }
