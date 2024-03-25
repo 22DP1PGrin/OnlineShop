@@ -55,7 +55,7 @@ public class Store
         categories.Add(entertainment);
     }
 
-       public void DisplayStore()
+    public void DisplayStore()
     {
         while (true)
         {
