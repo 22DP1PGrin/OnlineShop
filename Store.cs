@@ -63,7 +63,8 @@ public class Store
             Console.WriteLine("1. Enter credit card data");
             Console.WriteLine("2. Display categories");
             Console.WriteLine("3. Display cart");
-            Console.WriteLine("4. Exit");
+            Console.WriteLine("4. Delete account");
+            Console.WriteLine("5. Exit");
 
             string choice = Console.ReadLine();
 
