@@ -92,4 +92,54 @@ public class Store
             }
         }
     }
+    public void DisplayCategories()
+    {
+        Console.WriteLine("Available categories:");
+        for (int i = 0; i < categories.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {categories[i].Name}");
+        }
+
+        Console.WriteLine("Enter the category number to view products (or '0' to go back):");
+        string input = Console.ReadLine();
+        int categoryNumber;
+        if (int.TryParse(input, out categoryNumber) && categoryNumber >= 1 && categoryNumber <= categories.Count)
+        {
+            DisplayProductsInCategory(categories[categoryNumber - 1]);
+        }
+        else if (input == "0")
+        {
+            return;
+        }
+        else
+        {
+            Console.WriteLine("Invalid category number.");
+        }
+    }
+
+    private void DisplayProductsInCategory(Category category)
+    {
+        Console.WriteLine($"Products in {category.Name}:");
+        foreach (var product in category.Products)
+        {
+            Console.WriteLine($"{product.Name} - ${product.Price}");
+        }
+
+        Console.WriteLine("Enter the product number to add to cart (or '0' to go back):");
+        string input = Console.ReadLine();
+        int productNumber;
+        if (int.TryParse(input, out productNumber) && productNumber >= 1 && productNumber <= category.Products.Count)
+        {
+            ShoppingCart.AddProduct(category.Products[productNumber - 1]);
+            Console.WriteLine("Product added to cart!");
+        }
+        else if (input == "0")
+        {
+            return;
+        }
+        else
+        {
+            Console.WriteLine("Invalid product number.");
+        }
+    }
 }
