@@ -43,7 +43,7 @@ public class Store
         entertainment.AddProduct(new Product("Chess", 9.99));
         entertainment.AddProduct(new Product("Fishing rod", 29.99));
         entertainment.AddProduct(new Product("Color pencils", 6.99));
-        entertainment.AddProduct(new Product("Anime figure", 39.99));
+        entertainment.AddProduct(new Product("Anime figure", 19.99));
         entertainment.AddProduct(new Product("Bycycle", 199.99));
         entertainment.AddProduct(new Product("C# programming book", 11.99));
         
