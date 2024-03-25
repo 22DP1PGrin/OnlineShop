@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class ShoppingCart
 {
-    private List<Product> products = new List<Product>();
+    public List<Product> products = new List<Product>();
 
     public void AddProduct(Product product)
     {
