@@ -82,6 +82,8 @@ public class Store
                     ShoppingCart.DisplayCart();
                     break;
                 case "4":
+                    //
+                case "5":
                     Console.WriteLine("Thank you for using our store. Goodbye!");
                     return;
                 default:
