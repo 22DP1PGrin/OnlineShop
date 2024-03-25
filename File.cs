@@ -1,12 +1,12 @@
 using System;
 using System.Text;
 using System.IO;
-
 public class File
 {
     public void Writer(string Name, string Surname, string PhoneNumber, string Email, string Password)
     {
         string path = @"C:\Users\pgrin\source\repos\Eksamens\ConsoleApp3\Accounts.csv";
+        //string path = @"C:\Users\Admin\source\repos\Eksamens\Eksamens\Accounts.csv";
         try
         {
             using (StreamWriter sw = new StreamWriter(path, true, System.Text.Encoding.Default))
@@ -25,7 +25,8 @@ public class File
         Console.WriteLine("Enter your email!");
         string email = Console.ReadLine();
         string path = @"C:\Users\pgrin\source\repos\Eksamens\ConsoleApp3\Accounts.csv";
-        
+        //string path = @"C:\Users\Admin\source\repos\Eksamens\Eksamens\Accounts.csv";
+
         try
         {
             using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
@@ -78,7 +79,10 @@ public class File
     }
     public void Accounts()
     {
-        string path = @"C:\Users\Admin\source\repos\Eksamens\Eksamens\Accounts.csv";
+        //string path = @"C:\Users\Admin\source\repos\Eksamens\Eksamens\Accounts.csv";
+        string path = @"C:\Users\pgrin\source\repos\Eksamens\ConsoleApp3\Accounts.csv";
+
+        //string path = @"C:\Users\Admin\source\repos\Eksamens\Eksamens\Accounts.csv";
         using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
         {
             string line;
@@ -87,9 +91,9 @@ public class File
                 string[] parts = line.Split(',');
                 string email = parts[3];
                 string fileName = $"{email}.csv";
-                string fullFilePath = Path.Combine(@"C:\Users\Admin\source\repos\Eksamens\Eksamens\Accounts", fileName);
+                string fullFilePath = Path.Combine(@"C:\Users\pgrin\source\repos\Eksamens\ConsoleApp3\Accounts\", fileName);
                 FileInfo fileInf = new FileInfo(fullFilePath);
-                
+
                 if (!fileInf.Exists)
                 {
                     using (FileStream fs = fileInf.Create())
