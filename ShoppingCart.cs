@@ -8,18 +8,18 @@ public class ShoppingCart
     public void AddProduct(Product product)
     {
         products.Add(product);
-        Console.WriteLine($"{product.Name} added to your shopping cart.");
+        Console.WriteLine($"{product.name} added to your shopping cart.");
     }
 
     public void RemoveProduct(Product product)
     {
         if (products.Remove(product))
         {
-            Console.WriteLine($"{product.Name} removed from your shopping cart.");
+            Console.WriteLine($"{product.name} removed from your shopping cart.");
         }
         else
         {
-            Console.WriteLine($"{product.Name} is not in your shopping cart.");
+            Console.WriteLine($"{product.name} is not in your shopping cart.");
         }
     }
 
@@ -28,7 +28,7 @@ public class ShoppingCart
        Console.WriteLine("Your shopping cart:");
         foreach (var product in products)
         {
-            Console.WriteLine($"{product.Name} - ${product.Price}");
+            Console.WriteLine($"{product.name} - ${product.Price}");
         }
         Console.WriteLine($"Total: ${TotalPrice()}");
     }
