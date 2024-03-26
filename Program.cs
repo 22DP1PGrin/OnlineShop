@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        Registration obj = new Registration();
-        obj.Method1();
+       MainPage page = new MainPage();
+       page.Methods();
     }
 }
