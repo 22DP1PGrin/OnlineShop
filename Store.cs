@@ -73,7 +73,6 @@ public class Store
                 case "1":
                     Card.EnterCreditCardData();
                     Card.SetBalance();
-                    CardDataWriter.WriteToFile(card, "card_data.txt");
                     break;
                 case "2":
                     DisplayCategories();
