@@ -22,7 +22,7 @@ public class Store
         electronics.AddProduct(new Product("Tablet", 299.99));
         electronics.AddProduct(new Product("Keyboard", 24.99));
         electronics.AddProduct(new Product("Speakers", 29.99));
-        
+
         Category homeAppliances = new Category("Home Appliances");
         homeAppliances.AddProduct(new Product("Refrigerator", 328.99));
         homeAppliances.AddProduct(new Product("Washing Machine", 559.99));
@@ -46,7 +46,7 @@ public class Store
         entertainment.AddProduct(new Product("Anime figure", 19.99));
         entertainment.AddProduct(new Product("Bycycle", 199.99));
         entertainment.AddProduct(new Product("C# programming book", 11.99));
-        
+
 
         categories.Add(clothing);
         categories.Add(electronics);
@@ -57,6 +57,8 @@ public class Store
 
     public void DisplayStore()
     {
+       Card card=new Card();
+        ShoppingCart shoppingCart = new ShoppingCart();
         while (true)
         {
             Console.WriteLine("\nPlease choose an action:");
@@ -71,17 +73,17 @@ public class Store
             switch (choice)
             {
                 case "1":
-                    Card.EnterCreditCardData();
-                    Card.SetBalance();
+                    card.EnterCreditCardData();
+                    card.SetBalance();
                     break;
                 case "2":
                     DisplayCategories();
                     break;
                 case "3":
-                    ShoppingCart.DisplayCart();
+                    shoppingCart.DisplayCart();
                     break;
                 case "4":
-                    //
+                
                 case "5":
                     Console.WriteLine("Thank you for using our store. Goodbye!");
                     return;
@@ -118,6 +120,7 @@ public class Store
 
     private void DisplayProductsInCategory(Category category)
     {
+        ShoppingCart shoppingCart = new ShoppingCart();
         Console.WriteLine($"Products in {category.Name}:");
         foreach (var product in category.Products)
         {
@@ -129,7 +132,7 @@ public class Store
         int productNumber;
         if (int.TryParse(input, out productNumber) && productNumber >= 1 && productNumber <= category.Products.Count)
         {
-            ShoppingCart.AddProduct(category.Products[productNumber - 1]);
+            shoppingCart.AddProduct(category.Products[productNumber - 1]);
             Console.WriteLine("Product added to cart!");
         }
         else if (input == "0")
