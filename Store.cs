@@ -57,7 +57,7 @@ public class Store
 
     public void DisplayStore()
     {
-       Card card=new Card();
+        Card card = new Card();
         ShoppingCart shoppingCart = new ShoppingCart();
         while (true)
         {
@@ -83,7 +83,7 @@ public class Store
                     shoppingCart.DisplayCart();
                     break;
                 case "4":
-                
+
                 case "5":
                     Console.WriteLine("Thank you for using our store. Goodbye!");
                     return;
@@ -124,7 +124,7 @@ public class Store
         Console.WriteLine($"Products in {category.Name}:");
         foreach (var product in category.Products)
         {
-            Console.WriteLine($"{product.Name} - ${product.Price}");
+            Console.WriteLine($"{product.Name} - €{product.Price}");
         }
 
         Console.WriteLine("Enter the product number to add to cart (or '0' to go back):");
