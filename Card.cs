@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Text.RegularExpressions;
 
 public class Card
@@ -23,35 +22,48 @@ public class Card
         Regex cvvRegex = new Regex(@"^\d{3}$");
         Console.WriteLine("Enter your credit card data:");
 
+        Console.WriteLine("Card number:");
+        Console.WriteLine("For example: 0000 0000 0000 0000");
+        CreditCardNumber = Console.ReadLine();
 
         while (true)
         {
-            Console.WriteLine("Card number:");
-            Console.WriteLine("For example: 0000 0000 0000 0000");
-            CreditCardNumber = Console.ReadLine();
-
             Console.WriteLine("Card expiration date (MM/YY):");
             Console.WriteLine("For example: 12/24");
             CardExpirationDate = Console.ReadLine();
 
-            Console.WriteLine("CVV:");
-            Console.WriteLine("For example: 000");
+            if (!expirationDateRegex.IsMatch(CardExpirationDate))
+            {
+                Console.WriteLine("Wrong expiration date format. Please enter the expiration date again:");
+                continue;
+            }
+
+            string[] dateParts = CardExpirationDate.Split('/');
+            int expMonth = int.Parse(dateParts[0]);
+            int expYear = int.Parse(dateParts[1]);
+
+            if (expYear < 24 || (expYear == 24 && expMonth < 5))
+            {
+                Console.WriteLine("Your card has expired. Please enter a valid expiration date:");
+                continue;
+            }
+
+            break;
+        }
+
+        Console.WriteLine("CVV:");
+        Console.WriteLine("For example: 000");
+        CardCVV = Console.ReadLine();
+
+        while (!cvvRegex.IsMatch(CardCVV))
+        {
+            Console.WriteLine("Wrong format for CVV. Please enter the CVV again:");
             CardCVV = Console.ReadLine();
-             if (!cardNumberRegex.IsMatch(CreditCardNumber) || !expirationDateRegex.IsMatch(CardExpirationDate) || !cvvRegex.IsMatch(CardCVV))
-             {
-                Console.WriteLine("Wrong format. Try again!");
-               
-             }
-             else
-             {
-                break;
-             }
         }
     }
 
     public void SetBalance()
     {
-
         while (true)
         {
             Console.WriteLine("Enter your balance");
@@ -59,7 +71,7 @@ public class Card
 
             if (!double.TryParse(balanceInput, out double balance))
             {
-                Console.WriteLine("Wrong format!");
+                Console.WriteLine("Wrong format! Please enter your balance again:");
             }
             else
             {
@@ -69,5 +81,4 @@ public class Card
         }
     }
 }
-
 
