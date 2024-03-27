@@ -28,9 +28,9 @@ public class ShoppingCart
        Console.WriteLine("Your shopping cart:");
         foreach (var product in products)
         {
-            Console.WriteLine($"{product.Name} - ${product.Price}");
+            Console.WriteLine($"{product.Name} - €{product.Price}");
         }
-        Console.WriteLine($"Total: ${TotalPrice()}");
+        Console.WriteLine($"Total: €{TotalPrice()}");
     }
 
     private double TotalPrice()
