@@ -57,7 +57,7 @@ public class Card
             Console.WriteLine("Enter your balance");
             string balanceInput = Console.ReadLine();
 
-            if (double.TryParse(balanceInput, out double balance))
+            if (!double.TryParse(balanceInput, out double balance))
             {
                 Console.WriteLine("Wrong format!");
             }
@@ -70,4 +70,4 @@ public class Card
     }
 }
 
-}
+
