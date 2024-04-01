@@ -1,10 +1,10 @@
 public class MainPage
 {
+    Registration obj = new Registration();
+    Store store = new Store();
     public void Methods()
-    {
-        Registration obj = new Registration();
-        Store store = new Store();
-        obj.Method1();
+    {   
+        obj.Register();
         store.DisplayStore();
     }
 }
