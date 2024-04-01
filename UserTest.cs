@@ -1,11 +1,13 @@
-﻿using System.IO;
+using System.IO;
 using System.Text.RegularExpressions;
 
 public class UserTest
 {
     string Name, Surname, PhoneNumber, Email, Password, Password2;
-    string path = @"C:\Users\pgrin\source\repos\Eksamens\ConsoleApp3\Accounts.csv";
-    //string path = @"C:\Users\Admin\source\repos\Eksamens\Eksamens\Accounts.csv";
+    string[] userData = new string[5];
+
+    //string path = @"C:\Users\pgrin\source\repos\Eksamens\ConsoleApp3\Accounts.csv";
+    string fileName = "Accounts.csv";
 
     File file = new File();
 
@@ -23,7 +25,7 @@ public class UserTest
             }
             else
             {
-                file.Writer(Name);
+                userData[0] = Name;
                 break;
             }
         } while (true);
@@ -41,7 +43,7 @@ public class UserTest
             }
             else
             {
-                file.Writer(Surname);
+                userData[1]=Surname;
                 break;
             }
         } while (true);
@@ -56,7 +58,7 @@ public class UserTest
             bool emailExists = false;
             Console.WriteLine("Enter your email: ");
             Email = Console.ReadLine();
-            using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
+            using (StreamReader sr = new StreamReader(fileName, System.Text.Encoding.Default))
             {
                 string line;
                 while ((line = sr.ReadLine()) != null)
@@ -77,7 +79,7 @@ public class UserTest
             }
             if (!emailExists && Regex.IsMatch(Email, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
             {
-                file.Writer(Email);
+                userData[2] = Email;
                 break;
             }
             else
@@ -99,7 +101,7 @@ public class UserTest
             }
             else
             {
-                file.Writer(Name);
+                userData[3] = PhoneNumber;
                 break;
             }
         } while (true);
@@ -138,7 +140,8 @@ public class UserTest
             }
             else
             {
-                file.Writer(Password2);
+                userData[4]=Password2;
+                file.Writer(userData[0], userData[1], userData[2], userData[3], userData[4]);
                 break;
             }
         } while (true);
