@@ -5,6 +5,9 @@ using System.Collections.Generic;
 public class Store
 {
     private List<Category> categories = new List<Category>();
+    Card card = new Card();
+    ShoppingCart shoppingCart = new ShoppingCart();
+    File logIn = new File();
 
     public Store()
     {
@@ -57,11 +60,10 @@ public class Store
 
     public void DisplayStore()
     {
-        Card card = new Card();
-        ShoppingCart shoppingCart = new ShoppingCart();
+        logIn.LogIn();
         while (true)
         {
-            Console.WriteLine("\nPlease choose an action:");
+            Console.WriteLine("Please choose an action:");
             Console.WriteLine("1. Enter credit card data");
             Console.WriteLine("2. Display categories");
             Console.WriteLine("3. Display cart");
@@ -75,6 +77,7 @@ public class Store
                 case "1":
                     card.EnterCreditCardData();
                     card.SetBalance();
+                    logIn.WriteCardInAccounts(card.CreditCardNumber, card.CardExpirationDate, card.CardCVV, card.Balance);
                     break;
                 case "2":
                     DisplayCategories();
