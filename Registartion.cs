@@ -1,6 +1,5 @@
 using System;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
 
 public class Registration
 {
@@ -28,7 +27,7 @@ public class Registration
             {
                 if (Choice.ToLower() == "log in")
                 {
-                    file.Accounts();
+                    file.CreateAccounts();
                     break;
                 }
                 else
