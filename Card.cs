@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Text.RegularExpressions;
 
 public class Card
@@ -80,5 +81,38 @@ public class Card
             }
         }
     }
-}
+    public void ChangeCardOrBalance(string FileName, string lineToFind)
+    {
+        List<string> lines = new List<string>();
 
+        Console.WriteLine("Do you want to change your card and/or its balance?(Y/N)");
+        string choice=Console.ReadLine();
+        if (choice.ToLower() == "y")
+        {
+            EnterCreditCardData();
+            SetBalance();
+            using (StreamReader sr = new StreamReader(FileName, Encoding.Default))
+            {
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    if (line.Contains(lineToFind))
+                    {
+                        lines.Add("Card data," + CreditCardNumber + "," + CardExpirationDate + "," + CardCVV + "," + Balance);
+                    }
+                    else
+                    {
+                        lines.Add(line);
+                    }
+                }
+            }
+            using (StreamWriter writer = new StreamWriter(FileName))
+            {
+                foreach (string line in lines)
+                {
+                    writer.WriteLine(line);
+                }
+            }
+        }   
+    }
+}
