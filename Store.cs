@@ -3,11 +3,15 @@ using System.Collections.Generic;
 
 public class Store
 {
-    private List<Category> categories = new List<Category>();
-    private ShoppingCart shoppingCart = new ShoppingCart(); 
+  private List<Category> categories = new List<Category>();
+  private Card card;
+  private ShoppingCart shoppingCart;
 
     public Store()
     {
+        card = new Card();
+        shoppingCart = new ShoppingCart(card);
+      
         Category clothing = new Category("Clothing");
         clothing.AddProduct(new Product("T-Shirt", 15.35));
         clothing.AddProduct(new Product("Jeans", 11.97));
@@ -106,7 +110,7 @@ public class Store
       int categoryNumber;
       if (int.TryParse(input, out categoryNumber) && categoryNumber >= 1 && categoryNumber <= categories.Count)
       {
-          DisplayProductsInCategory(categories[categoryNumber - 1], shoppingCart);
+          DisplayProductsInCategory(categories[categoryNumber - 1], shoppingCart); // Pass shoppingCart as parameter
       }
       else if (input == "0")
       {
@@ -131,7 +135,15 @@ public class Store
         int productNumber;
         if (int.TryParse(input, out productNumber) && productNumber >= 1 && productNumber <= category.Products.Count)
         {
-            shoppingCart.AddProduct(category.Products[productNumber - 1]);  
+            shoppingCart.AddProduct(category.Products[productNumber - 1]);
+
+            Console.WriteLine("Do you want to buy the product? (Y/N)");
+            string buyChoice = Console.ReadLine().ToUpper();
+            if (buyChoice == "Y")
+            {
+                shoppingCart.BuyProducts();
+            }
+          
         }
         else if (input == "0")
         {
