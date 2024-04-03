@@ -1,13 +1,16 @@
 using System;
 using System.Text;
 using System.IO;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 public class File
 {
     string email = "";
     bool PasswordExists = false;
 
-    //string path = @"C:\Users\pgrin\source\repos\Eksamens\ConsoleApp3\Accounts.csv";
-    string path = @"C:\Users\Admin\source\repos\Eksamens\Eksamens\Accounts.csv";
+    Card card=new Card();
+
+    string path = @"C:\Users\pgrin\source\repos\Eksamens\ConsoleApp3\Accounts.csv";
+    //string path = @"C:\Users\Admin\source\repos\Eksamens\Eksamens\Accounts.csv";
     
     //Metode, kas ieraksta lietotāja datus csv failā.
     public void Writer(string name, string surname, string email, string phoneNumber, string password)
@@ -25,6 +28,8 @@ public class File
             Console.WriteLine(e.Message);
         }
     }
+    
+    //Metode, kas izveido kontus csv failos.
     public void CreateAccounts()
     {
         using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
@@ -35,7 +40,7 @@ public class File
                 string[] parts = line.Split(',');
                 string email2 = parts[3];
                 string fileName = $"{email2}.csv";
-                string fullFilePath = Path.Combine(@"C:\Users\Admin\source\repos\Eksamens\Eksamens\Accounts\", fileName);
+                string fullFilePath = Path.Combine(@"C:\Users\pgrin\source\repos\Eksamens\ConsoleApp3\Accounts\", fileName);
                 FileInfo fileInf = new FileInfo(fullFilePath);
 
                 if (!fileInf.Exists)
@@ -47,6 +52,7 @@ public class File
             }
         }
     }
+    // Metode, kas pārbauda, vai lietotājs ir reģistrējies.
     public void LogIn()
     {
         while (true)
@@ -96,23 +102,50 @@ public class File
             }
         }
     }
+    
+    //Metode, kas ieraksta kartes datus kontu failos.
     public void WriteCardInAccounts(string Number, string ExpirationDate, string CVV, double Balance)
     {
 
         string fileName = $"{email}.csv";
-        string fullPath = Path.Combine(@"C:\Users\Admin\source\repos\Eksamens\Eksamens\Accounts", fileName);
+        string fullPath = Path.Combine(@"C:\Users\pgrin\source\repos\Eksamens\ConsoleApp3\Accounts\", fileName);
+        string lineToFind = "Card data";
+        bool CardExist = false;
 
-        try
+        using (StreamReader sr = new StreamReader(fullPath, Encoding.Default))
         {
-            using (StreamWriter sw = new StreamWriter(fullPath, true, System.Text.Encoding.Default))
+            string line;
+            while ((line = sr.ReadLine()) != null)
             {
-                string line = $"{Number},{ExpirationDate},{CVV},balance:{Balance}";
-                sw.WriteLine("Card data: "+line+"\n");
+                foreach (string parts in line.Split(','))
+                {
+                    if (parts.Contains(lineToFind))
+                    {
+                        CardExist = true;
+                        Console.WriteLine("The card is already linked!");
+                        break;
+                    }
+                }
             }
         }
-        catch (Exception e)
+        if (!CardExist)
         {
-            Console.WriteLine(e.Message);
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(fullPath, true, Encoding.Default))
+                {
+                    string line = $"Card data,{Number},{ExpirationDate},{CVV},{Balance}\n";
+                    sw.WriteLine(line);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+        else
+        {
+            card.ChangeCardOrBalance(fullPath, lineToFind);
         }
     }
 }
