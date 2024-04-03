@@ -1,15 +1,22 @@
 using System;
 using System.Collections.Generic;
 
-public class ShoppingCart
-{
-    public List<Product> products = new List<Product>();
+  public class ShoppingCart
+  {
+      public List<Product> products;
+      private Card userCard;
+    
+      public ShoppingCart(Card card)
+      {
+          userCard = card;
+          products = new List<Product>();
+      }
+      public void AddProduct(Product product)
+      {
+          products.Add(product);
+          Console.WriteLine($"{product.Name} added to your shopping cart.");
+      }
 
-    public void AddProduct(Product product)
-    {
-        products.Add(product);
-        Console.WriteLine($"{product.Name} added to your shopping cart.");
-    }
 
     public void RemoveProduct(Product product)
     {
@@ -41,5 +48,18 @@ public class ShoppingCart
             total += product.Price;
         }
         return total;
+    }
+
+    public void BuyProducts()
+    {
+        double totalPrice = TotalPrice();
+        if (totalPrice > userCard.Balance)
+        {
+            Console.WriteLine("You don't have enough balance to buy this product.");
+            return;
+        }
+
+        userCard.Balance -= totalPrice;
+        Console.WriteLine($"Product bought successfully! Your new balance is €{userCard.Balance}");
     }
 }
