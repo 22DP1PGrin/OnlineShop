@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
 
-
 public class Store
 {
     private List<Category> categories = new List<Category>();
-    Card card = new Card();
-    ShoppingCart shoppingCart = new ShoppingCart();
-    File logIn = new File();
+    private ShoppingCart shoppingCart = new ShoppingCart(); 
 
     public Store()
     {
@@ -60,10 +57,10 @@ public class Store
 
     public void DisplayStore()
     {
-        logIn.LogIn();
+        Card card = new Card();
         while (true)
         {
-            Console.WriteLine("Please choose an action:");
+            Console.WriteLine("\nPlease choose an action:");
             Console.WriteLine("1. Enter credit card data");
             Console.WriteLine("2. Display categories");
             Console.WriteLine("3. Display cart");
@@ -77,10 +74,9 @@ public class Store
                 case "1":
                     card.EnterCreditCardData();
                     card.SetBalance();
-                    logIn.WriteCardInAccounts(card.CreditCardNumber, card.CardExpirationDate, card.CardCVV, card.Balance);
                     break;
                 case "2":
-                    DisplayCategories();
+                    DisplayCategories(shoppingCart); 
                     break;
                 case "3":
                     shoppingCart.DisplayCart();
@@ -96,34 +92,34 @@ public class Store
             }
         }
     }
-    public void DisplayCategories()
-    {
-        Console.WriteLine("Available categories:");
-        for (int i = 0; i < categories.Count; i++)
-        {
-            Console.WriteLine($"{i + 1}. {categories[i].Name}");
-        }
 
-        Console.WriteLine("Enter the category number to view products (or '0' to go back):");
-        string input = Console.ReadLine();
-        int categoryNumber;
-        if (int.TryParse(input, out categoryNumber) && categoryNumber >= 1 && categoryNumber <= categories.Count)
-        {
-            DisplayProductsInCategory(categories[categoryNumber - 1]);
-        }
-        else if (input == "0")
-        {
-            return;
-        }
-        else
-        {
-            Console.WriteLine("Invalid category number.");
-        }
-    }
-
-    private void DisplayProductsInCategory(Category category)
+    public void DisplayCategories(ShoppingCart shoppingCart)
     {
-        ShoppingCart shoppingCart = new ShoppingCart();
+      Console.WriteLine("Available categories:");
+      for (int i = 0; i < categories.Count; i++)
+      {
+          Console.WriteLine($"{i + 1}. {categories[i].Name}");
+      }
+
+      Console.WriteLine("Enter the category number to view products (or '0' to go back):");
+      string input = Console.ReadLine();
+      int categoryNumber;
+      if (int.TryParse(input, out categoryNumber) && categoryNumber >= 1 && categoryNumber <= categories.Count)
+      {
+          DisplayProductsInCategory(categories[categoryNumber - 1], shoppingCart);
+      }
+      else if (input == "0")
+      {
+          return;
+      }
+      else
+      {
+          Console.WriteLine("Invalid category number.");
+      }
+  }
+
+    private void DisplayProductsInCategory(Category category, ShoppingCart shoppingCart)
+    {
         Console.WriteLine($"Products in {category.Name}:");
         foreach (var product in category.Products)
         {
@@ -135,8 +131,7 @@ public class Store
         int productNumber;
         if (int.TryParse(input, out productNumber) && productNumber >= 1 && productNumber <= category.Products.Count)
         {
-            shoppingCart.AddProduct(category.Products[productNumber - 1]);
-            Console.WriteLine("Product added to cart!");
+            shoppingCart.AddProduct(category.Products[productNumber - 1]);  
         }
         else if (input == "0")
         {
