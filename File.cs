@@ -148,4 +148,25 @@ public class File
             card.ChangeCardOrBalance(fullPath, lineToFind);
         }
     }
+    public void WriteShoppingCartInAccounts(List<Product> products)
+{
+    string fileName = $"{email}.csv";
+    string fullPath = Path.Combine(@"C:\Users\pgrin\source\repos\Eksamens\ConsoleApp3\Accounts\", fileName);
+
+    try
+    {
+        using (StreamWriter sw = new StreamWriter(fullPath, true, Encoding.Default))
+        {
+            foreach (var prod in products)
+            {
+                string line = $"Shopping cart,{prod.Name},{prod.Price}";
+                sw.WriteLine(line);
+            }
+        }
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
 }
