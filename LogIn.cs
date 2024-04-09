@@ -12,7 +12,7 @@ public class LogIn
     {
         while(true)
         {
-            Console.WriteLine("Enter your email! ");
+            Console.WriteLine("Enter your email: ");
             email = Console.ReadLine();
             try
             {
@@ -39,14 +39,14 @@ public class LogIn
                 }
                 if (!PasswordExists)
                 {
-                    Console.WriteLine("Invalid email or password. Try again!");
+                    Console.WriteLine("Invalid email or password. Try again!"); // ja e-pasts vai parole ir ievadīti nepareizi, ir jāievada vēlreiz
                     Registration obj = new Registration();
                     obj.Register();
                 }
                 else
                 {
 
-                    Console.WriteLine("You are logged in!");
+                    Console.WriteLine("You are logged in!"); // ja e-pasts un parole ir ievadīti pareizi, lietotājs ielogojas kontā
                     break;
                 }
 
