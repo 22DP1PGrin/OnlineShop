@@ -6,6 +6,7 @@ public class Store
     private List<Category> categories = new List<Category>();
     private Card card;
     private ShoppingCart shoppingCart;
+    private File file;
 
     public Store()
     {
@@ -63,6 +64,7 @@ public class Store
     {
         Card card = new Card();
         File file = new File();
+        ShoppingCart shoppingCart = new ShoppingCart(card);
         file.LogIn();
         while (true)
         {
@@ -84,6 +86,7 @@ public class Store
                     break;
                 case "2":
                     DisplayCategories(shoppingCart);
+                    file.WriteShoppingCartInAccounts(shoppingCart.products);
                     break;
                 case "3":
                     shoppingCart.DisplayCart();
@@ -114,6 +117,7 @@ public class Store
         if (int.TryParse(input, out categoryNumber) && categoryNumber >= 1 && categoryNumber <= categories.Count)
         {
             DisplayProductsInCategory(categories[categoryNumber - 1], shoppingCart); // Pass shoppingCart as parameter
+
         }
         else if (input == "0")
         {
@@ -135,7 +139,7 @@ public class Store
             counter++;
         }
 
-        Console.WriteLine("Enter the product number to add to cart or buy (or '0' to go back):");
+        Console.WriteLine("Enter the product number to add to cart or buy it (or '0' to go back):");
         string input = Console.ReadLine();
         int productNumber;
         if (int.TryParse(input, out productNumber) && productNumber >= 1 && productNumber <= category.Products.Count)
