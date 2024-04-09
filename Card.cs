@@ -46,7 +46,7 @@ public class Card
 
             if (expYear < 24 || (expYear == 24 && expMonth < 5)) // pārbauda vai karte ir derīga
             {
-                Console.WriteLine("Your card has expired. Please enter a valid expiration date:");
+                Console.WriteLine("Your card has expired. Please enter a valid expiration date:"); // ja karte nav derīga, ir jāievada derīguma tērmiņu vēlreiz, kamēr nebūs pareizs
                 continue;
             }
 
@@ -64,7 +64,7 @@ public class Card
         }
     }
 
-    public void SetBalance() // lietotājs pats ievada balanci
+    public void SetBalance() // lietotājs pats ievada bilanci
     {
         while (true)
         {
@@ -82,11 +82,11 @@ public class Card
             }
         }
     }
-    public void ChangeCardOrBalance(string FileName, string lineToFind) // ir iespēja mainīt karti un/vai balanci
+    public void ChangeCardOrBalance(string FileName, string lineToFind) // ir iespēja mainīt karti un/vai bilanci
     {
         List<string> lines = new List<string>();
 
-        Console.WriteLine("Do you want to change your card and/or its balance?(Y/N)");
+        Console.WriteLine("Do you want to change your card and/or its balance?(Y/N)"); // apstiprināt kartes un/vai bilances izmaiņus
         string choice=Console.ReadLine();
         if (choice.ToLower() == "y")
         {
