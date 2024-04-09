@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 
 public class Card
 {
+    // kartes dati
     public string CreditCardNumber { get; set; }
     public string CardExpirationDate { get; set; }
     public string CardCVV { get; set; }
@@ -18,9 +19,9 @@ public class Card
 
     public void EnterCreditCardData()
     {
-        Regex cardNumberRegex = new Regex(@"^(\d{4}\s){3}\d{4}$");
-        Regex expirationDateRegex = new Regex(@"^(0[1-9]|1[0-2])\/\d{2}$");
-        Regex cvvRegex = new Regex(@"^\d{3}$");
+        Regex cardNumberRegex = new Regex(@"^(\d{4}\s){3}\d{4}$"); // kartes numura formāts
+        Regex expirationDateRegex = new Regex(@"^(0[1-9]|1[0-2])\/\d{2}$"); // derīguma termiņa formāts
+        Regex cvvRegex = new Regex(@"^\d{3}$"); // CVV formāts
         Console.WriteLine("Enter your credit card data:");
 
         Console.WriteLine("Card number:");
@@ -39,11 +40,11 @@ public class Card
                 continue;
             }
 
-            string[] dateParts = CardExpirationDate.Split('/');
+            string[] dateParts = CardExpirationDate.Split('/'); // atdala derīguma termiņa mēnesi no gada
             int expMonth = int.Parse(dateParts[0]);
             int expYear = int.Parse(dateParts[1]);
 
-            if (expYear < 24 || (expYear == 24 && expMonth < 5))
+            if (expYear < 24 || (expYear == 24 && expMonth < 5)) // pārbauda vai karte ir derīga
             {
                 Console.WriteLine("Your card has expired. Please enter a valid expiration date:");
                 continue;
@@ -63,7 +64,7 @@ public class Card
         }
     }
 
-    public void SetBalance()
+    public void SetBalance() // lietotājs pats ievada balanci
     {
         while (true)
         {
@@ -81,7 +82,7 @@ public class Card
             }
         }
     }
-    public void ChangeCardOrBalance(string FileName, string lineToFind)
+    public void ChangeCardOrBalance(string FileName, string lineToFind) // ir iespēja mainīt karti un/vai balanci
     {
         List<string> lines = new List<string>();
 
