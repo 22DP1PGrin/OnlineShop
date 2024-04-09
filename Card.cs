@@ -13,8 +13,8 @@ public class Card
 
     public Card()
     {
-        Balance = 0.0;
-        CardDataEntered = false;
+        Balance = 0.0; // sākuma bilance
+        CardDataEntered = false; // kartes dati vēl nav ievadītas
     }
 
     public void EnterCreditCardData()
