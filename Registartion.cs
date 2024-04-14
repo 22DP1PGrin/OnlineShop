@@ -3,15 +3,16 @@ using System.Text.RegularExpressions;
 
 public class Registration
 {
-    File file = new File();
     UserTest user = new UserTest();
     public void Register()
     {
         Console.WriteLine("Welcome to the store \"Name\". To continue working, you must log in to your account.\nDon't have an account? Register!\n");
+        
         while (true)
         {
             Console.WriteLine("Enter \"Sign in\" to register or \"Log in\" to log in.");
             string Choice = Console.ReadLine();
+            
             if (Choice.ToLower() == "sign in")
             {
                 user.name();
@@ -20,6 +21,7 @@ public class Registration
                 user.phoneNumber();
                 user.password();
                 user.password2();
+                
                 Console.WriteLine("You have successfully registered!");
                 break;
             }
@@ -27,7 +29,6 @@ public class Registration
             {
                 if (Choice.ToLower() == "log in")
                 {
-                    file.CreateAccounts();
                     break;
                 }
                 else
