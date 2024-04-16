@@ -92,4 +92,36 @@ using System.Collections.Generic;
         userCard.Balance -= totalPrice;
         Console.WriteLine($"Product bought successfully! Your new balance is €{userCard.Balance}");
     }
+    public void deleteFromCart()
+    {
+        if (products.Count == 0)
+        {
+            Console.WriteLine("Your shopping cart is empty. Nothing to delete.");
+            return;
+        }
+        
+        int productNumber;
+        
+        do
+        {
+            Console.WriteLine("Enter the product number to delete from your shopping cart(or '0' to go main menu): ");
+            string product = Console.ReadLine();
+            
+            if (int.TryParse(product, out productNumber) && productNumber >= 1 && productNumber <= products.Count)
+            {
+                products.RemoveAt(productNumber - 1);
+                Console.WriteLine($"Product {productNumber} deleted from your shopping cart.");
+                DisplayCart();
+            }
+            else if (productNumber == 0)
+            {
+                Console.WriteLine("Going back...");
+                return;
+            }
+            else
+            {
+                Console.WriteLine("Inccorect input!");
+            }
+        } while (productNumber!= 0);
+    }
 }
