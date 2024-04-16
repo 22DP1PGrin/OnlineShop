@@ -4,7 +4,7 @@ using System.IO;
 public class File
 {
     string email = "";
-    
+
     Card card = new Card();
 
     //Metode, kas atrod ceļu uz failu Accounts.csv
@@ -12,13 +12,13 @@ public class File
     {
         //Iegūstiet darba direktoriju
         string currentDirectory = Directory.GetCurrentDirectory();
-        
+
         // Paceļas par 2 līmeņiem uz augšu, lai sasniegt projekta saknes direktoriju.
         string projectDirectory = Directory.GetParent(currentDirectory).Parent.Parent.FullName;
-       
+
         //Ģenerē pilnu ceļu uz failu Accounts.csv projekta saknē
         string filePath = Path.Combine(projectDirectory, "Accounts.csv");
-        
+
         return filePath;
     }
     public string pathToAccountsMap()
@@ -29,7 +29,7 @@ public class File
         string projectDirectory = Directory.GetParent(Directory.GetParent(Directory.GetParent(currentDirectory).FullName).FullName).FullName;
         //Ģenerē pilnu ceļu uz failu
         string filePath = Path.Combine(projectDirectory, "Accounts");
-        
+
         return filePath;
     }
 
@@ -37,7 +37,7 @@ public class File
     public void Writer(string name, string surname, string email, string phoneNumber, string password)
     {
         string filePath = pathToAccountsCsv();
-        
+
         using (StreamWriter sw = new StreamWriter(filePath, true, Encoding.Default))
         {
             string line = $"{name},{surname},{email},{phoneNumber},{password}";
@@ -51,18 +51,18 @@ public class File
         string filePath = pathToAccountsCsv();
 
         string filePath2 = pathToAccountsMap();
-        
+
         using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
         {
             string line;
-            
+
             while ((line = sr.ReadLine()) != null)
             {
                 string[] parts = line.Split(',');
                 string email2 = parts[2];
                 string fileName = $"{email2}.csv";
                 string fullFilePath = Path.Combine(filePath2, fileName);
-                
+
                 FileInfo fileInf = new FileInfo(fullFilePath);
 
                 if (!fileInf.Exists)
@@ -78,7 +78,7 @@ public class File
     public void LogIn()
     {
         bool PasswordExists = false;
-        
+
         while (true)
         {
             CreateAccounts();
@@ -93,11 +93,11 @@ public class File
             using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
             {
                 string line;
-                
+
                 while ((line = sr.ReadLine()) != null)
                 {
                     string[] parts = line.Split(',');
-                    
+
                     if (parts.Contains(email))
                     {
                         if (parts.Contains(password))
@@ -110,11 +110,11 @@ public class File
                         }
                     }
                 }
-            }      
+            }
             if (!PasswordExists)
             {
                 Console.WriteLine("Invalid email or password. Try again!\n");
-                
+
                 Registration obj = new Registration();
                 obj.Register();
             }
@@ -131,16 +131,16 @@ public class File
     {
 
         string fileName = $"{email}.csv";
-        string filePath2 = pathToAccountsMap(); 
+        string filePath2 = pathToAccountsMap();
         string fullPath = Path.Combine(filePath2, fileName);
-        
+
         string lineToFind = "Card data";
         bool CardExist = false;
 
         using (StreamReader sr = new StreamReader(fullPath, Encoding.Default))
         {
             string line;
-            
+
             while ((line = sr.ReadLine()) != null)
             {
                 foreach (string parts in line.Split(';'))
@@ -176,17 +176,17 @@ public class File
         string filePath2 = pathToAccountsMap();
         string fullPath = Path.Combine(filePath2, fileName);
         List<string> existingLines = new List<string>();
-        
+
         using (StreamReader sr = new StreamReader(fullPath))
         {
             string line;
             List<string> updatedLines = new List<string>();
-            
+
             while ((line = sr.ReadLine()) != null)
             {
                 if (line.StartsWith("Card data"))
                 {
-                    existingLines.Add(line+"\n");
+                    existingLines.Add(line + "\n");
                 }
             }
         }
@@ -201,20 +201,20 @@ public class File
                 string line = $"Shopping cart;{prod.Name};{prod.Price}";
                 sw.WriteLine(line);
             }
-        } 
+        }
     }
 
     //Ieraksta produktus no vajadzīgā failā bez kartes datiem
     public void writeShoppingCardInList(List<Product> products)
     {
-        string fileName=$"{email}.csv";
+        string fileName = $"{email}.csv";
         string filePath2 = pathToAccountsMap();
         string fullPath = Path.Combine(filePath2, fileName);
-        
+
         using (StreamReader sr = new StreamReader(fullPath, Encoding.Default))
         {
             string line;
-            
+
             while ((line = sr.ReadLine()) != null)
             {
                 if (line.StartsWith("Shopping cart"))
@@ -222,7 +222,7 @@ public class File
                     string[] parts = line.Split(';');
                     string productName = parts[1];
                     double productPrice;
-                    
+
                     if (double.TryParse(parts[2], out productPrice))
                     {
                         Product product = new Product(productName, productPrice);
@@ -232,7 +232,8 @@ public class File
             }
         }
     }
-    public void Balance()
+    
+    public double Balance()
     {
         string fileNmae = $"{email}.csv";
         string filePath2 = pathToAccountsMap();
@@ -243,18 +244,18 @@ public class File
 
             while ((line = sr.ReadLine()) != null)
             {
-                if(line.StartsWith("Card data"))
+                if (line.StartsWith("Card data"))
                 {
                     string[] parts = line.Split(';');
                     double balance;
                     if (double.TryParse(parts[3], out balance))
                     {
-                        double newBalance = balance;
-                        Console.WriteLine(newBalance);
+                        return balance;
                     }
                 }
 
             }
         }
+        return 0.0;
     }
 }
