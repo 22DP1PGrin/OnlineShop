@@ -116,8 +116,7 @@ public class Store
         int categoryNumber;
         if (int.TryParse(input, out categoryNumber) && categoryNumber >= 1 && categoryNumber <= categories.Count)
         {
-            DisplayProductsInCategory(categories[categoryNumber - 1], shoppingCart); // Pass shoppingCart as parameter
-
+            DisplayProductsInCategory(categories[categoryNumber - 1], shoppingCart);
         }
         else if (input == "0")
         {
