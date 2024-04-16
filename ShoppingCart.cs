@@ -5,7 +5,7 @@ using System.Collections.Generic;
   {
       public List<Product> products;
       private Card userCard;
-    
+
       public ShoppingCart(Card card)
       {
           userCard = card;
@@ -32,12 +32,42 @@ using System.Collections.Generic;
 
     public void DisplayCart()
     {
-       Console.WriteLine("Your shopping cart:");
-        foreach (var product in products)
+        Console.WriteLine("Your shopping cart:");
+        for (int i = 0; i < products.Count; i++)
         {
-            Console.WriteLine($"{product.Name} - €{product.Price}");
+            Console.WriteLine($"{i + 1}. {products[i].Name} - €{products[i].Price}");
         }
-        Console.WriteLine($"Total: €{TotalPrice()}");
+        double totalPrice = TotalPrice();
+        Console.WriteLine($"Total: €{Math.Round(totalPrice, 2)}");
+        Console.WriteLine("Enter the product number to buy (or '0' to go back):");
+        string input = Console.ReadLine();
+        int productNumber;
+        if (int.TryParse(input, out productNumber) && productNumber >= 1 && productNumber <= products.Count)
+        {
+            BuyProduct(products[productNumber - 1]);
+        }
+        else if (input == "0")
+        {
+            return;
+        }
+        else
+        {
+            Console.WriteLine("Invalid product number.");
+        }
+    }
+
+    public void BuyProduct(Product product)
+    {
+        double totalPrice = product.Price;
+        if (totalPrice > userCard.Balance)
+        {
+            Console.WriteLine("You don't have enough balance to buy this product.");
+            return;
+        }
+
+        userCard.Balance -= totalPrice;
+        Console.WriteLine($"Product '{product.Name}' bought successfully! Your new balance is €{userCard.Balance}");
+        products.Remove(product);
     }
 
     private double TotalPrice()
