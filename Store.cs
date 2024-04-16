@@ -66,20 +66,17 @@ public class Store
         File file = new File();
         ShoppingCart shoppingCart = new ShoppingCart(card);
         file.LogIn();
+        file.writeShoppingCardInList(shoppingCart.products);
         while (true)
         {
-            Console.WriteLine("\nPlease choose an action:");
-            Console.WriteLine("1. Enter credit card data or change credit card data and/or balance");
-            Console.WriteLine("2. Display categories");
-            Console.WriteLine("3. Display cart");
-            Console.WriteLine("4. Delete account");
-            Console.WriteLine("5. Exit");
-
+            Console.WriteLine("\nPlease choose an action:\n1. Enter credit card data or change credit card data and/or balance\n2. Display products\n3. Display cart\n4. Delete account\n5. Exit");
             string choice = Console.ReadLine();
 
             switch (choice)
             {
                 case "1":
+                    
+                    file.WriteCardInAccounts(card.CreditCardNumber, card.CardExpirationDate, card.CardCVV, card.Balance);
                     card.EnterCreditCardData();
                     card.SetBalance();
                     file.WriteCardInAccounts(card.CreditCardNumber, card.CardExpirationDate, card.CardCVV, card.Balance);
@@ -90,7 +87,23 @@ public class Store
                     break;
                 case "3":
                     shoppingCart.DisplayCart();
-                    break;
+                    Console.WriteLine("\nPlease choose an action:\n1.Return to main menu \n2.Remove an item from the cart \n3.Buy an item from the cart");
+                    string choise = Console.ReadLine();
+                    switch(choise)
+                    {
+                        case "1":
+                            break;
+                        case "2":
+                            shoppingCart.deleteFromCart();
+                            file.WriteShoppingCartInAccounts(shoppingCart.products);
+                            break;
+                        case "3":
+                            break;
+                        default:
+                            Console.WriteLine("Inccorect input!");
+                            break;
+                    }
+                    continue;
                 case "4":
 
                 case "5":
@@ -105,67 +118,78 @@ public class Store
 
     public void DisplayCategories(ShoppingCart shoppingCart)
     {
-        Console.WriteLine("Available categories:");
-        for (int i = 0; i < categories.Count; i++)
-        {
-            Console.WriteLine($"{i + 1}. {categories[i].Name}");
-        }
-
-        Console.WriteLine("Enter the category number to view products (or '0' to go back):");
-        string input = Console.ReadLine();
+       
         int categoryNumber;
-        if (int.TryParse(input, out categoryNumber) && categoryNumber >= 1 && categoryNumber <= categories.Count)
-        {
-            DisplayProductsInCategory(categories[categoryNumber - 1], shoppingCart);
-        }
-        else if (input == "0")
-        {
-            return;
-        }
-        else
-        {
-            Console.WriteLine("Invalid category number.");
-        }
+        
+        do {
+            Console.WriteLine("Available categories:");
+            
+            for (int i = 0; i < categories.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {categories[i].Name}");
+            }
+            
+            Console.WriteLine("Enter the category number to view products (or '0' to go back):");
+            string input = Console.ReadLine();
+            
+            if (int.TryParse(input, out categoryNumber) && categoryNumber >= 1 && categoryNumber <= categories.Count)
+            {
+                DisplayProductsInCategory(categories[categoryNumber - 1], shoppingCart); // Pass shoppingCart as parameter
+
+            }
+            else if (input == "0")
+            {
+                return;
+            }
+            else
+            {
+                Console.WriteLine("Invalid category number.");
+            }
+        } while (categoryNumber!=0);
     }
 
     private void DisplayProductsInCategory(Category category, ShoppingCart shoppingCart)
     {
-        Console.WriteLine($"Products in {category.Name}:");
-        int counter = 1;
-        foreach (var product in category.Products)
-        {
-            Console.WriteLine($"{counter}. {product.Name} - €{product.Price}");
-            counter++;
-        }
-
-        Console.WriteLine("Enter the product number to add to cart or buy it (or '0' to go back):");
-        string input = Console.ReadLine();
         int productNumber;
-        if (int.TryParse(input, out productNumber) && productNumber >= 1 && productNumber <= category.Products.Count)
+        do
         {
-            Console.WriteLine("Do you want to buy the product? (Y/N)");
-            string buyChoice = Console.ReadLine().ToUpper();
-            if (buyChoice == "Y")
+            Console.WriteLine($"Products in {category.Name}:");
+            int counter = 1;
+            foreach (var product in category.Products)
             {
-                shoppingCart.BuyProducts();
+                Console.WriteLine($"{counter}. {product.Name} - €{product.Price}");
+                counter++;
             }
-            else if (buyChoice == "N")
+
+            Console.WriteLine("Enter the product number to add to cart or buy it (or '0' to go back):");
+            string input = Console.ReadLine();
+
+            if (int.TryParse(input, out productNumber) && productNumber >= 1 && productNumber <= category.Products.Count)
             {
-                shoppingCart.AddProduct(category.Products[productNumber - 1]);
+                Console.WriteLine("Do you want to buy the product? (Y/N)");
+                string buyChoice = Console.ReadLine().ToUpper();
+
+                if (buyChoice == "Y")
+                {
+                    shoppingCart.BuyProduct(category.Products[productNumber - 1]);
+                }
+                else if (buyChoice == "N")
+                {
+                    shoppingCart.AddProduct(category.Products[productNumber - 1]);
+                }
+                else
+                {
+                    Console.WriteLine("Invalid choice.");
+                }
+            }
+            else if (input == "0")
+            {
+                return;
             }
             else
             {
-                Console.WriteLine("Invalid choice.");
+                Console.WriteLine("Invalid product number.");
             }
-
-        }
-        else if (input == "0")
-        {
-            return;
-        }
-        else
-        {
-            Console.WriteLine("Invalid product number.");
-        }
-    }
+        } while (productNumber != 0);
+    }  
 }
