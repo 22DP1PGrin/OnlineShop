@@ -28,6 +28,12 @@ public class Card
         Console.WriteLine("For example: 0000 0000 0000 0000");
         CreditCardNumber = Console.ReadLine();
 
+        while (!cardNumberRegex.IsMatch(CreditCardNumber))
+          {
+              Console.WriteLine("Wrong format. Please enter card number again:");
+              CreditCardNumber = Console.ReadLine();
+          }
+
         while (true)
         {
             Console.WriteLine("Card expiration date (MM/YY):");
