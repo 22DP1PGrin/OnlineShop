@@ -69,7 +69,7 @@ public class Store
         file.writeShoppingCardInList(shoppingCart.products);
         while (true)
         {
-            Console.WriteLine("\nPlease choose an action:\n1. Enter credit card data or change credit card data and/or balance\n2. Display products\n3. Display cart\n4. Delete account\n5. Exit");
+            Console.WriteLine("\nPlease choose an action:\n1. Enter credit card data or change credit card data and/or balance\n2. Display products\n3. Display cart\n4. Account settings\n5. Exit");
             string choice = Console.ReadLine();
 
             switch (choice)
@@ -105,7 +105,21 @@ public class Store
                     }
                     continue;
                 case "4":
-
+                    Console.WriteLine("\nPlease choose an action:\n1.Return to main menu \n2. Change password \n3.Delete account");
+                    string choise2 = Console.ReadLine();
+                    switch(choise2)
+                    {
+                        case "1":
+                            break;
+                        case "2":
+                            break;
+                        case "3":
+                            break;
+                        default:
+                            Console.WriteLine("Inccorect input!");
+                            break;
+                    }
+                    break;
                 case "5":
                     Console.WriteLine("Thank you for using our store. Goodbye!");
                     return;
