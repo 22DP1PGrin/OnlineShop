@@ -1,10 +1,17 @@
 using System;
 using System.Text;
 using System.IO;
+using System.Text.RegularExpressions;
 public class File
 {
     string email = "";
+    string password = "";
+   
+    List<string> lines = new List<string>();
+    bool passwordChanged = false;
 
+    List<string> listWithoutAccount = new List<string>();
+    bool passwordTrue = false;
     Card card = new Card();
 
     //Metode, kas atrod ceļu uz failu Accounts.csv
@@ -86,7 +93,7 @@ public class File
             Console.WriteLine("Enter your email! ");
             email = Console.ReadLine();
             Console.WriteLine("Enter your password: ");
-            string password = Console.ReadLine();
+            password = Console.ReadLine();
 
             string filePath = pathToAccountsCsv();
 
@@ -232,7 +239,7 @@ public class File
             }
         }
     }
-    
+
     public double Balance()
     {
         string fileNmae = $"{email}.csv";
@@ -257,5 +264,128 @@ public class File
             }
         }
         return 0.0;
+    }
+
+    //Dzēš kontu un ieraksta par to
+    public bool deleteAccount()
+    {
+        string filePath = pathToAccountsCsv();
+
+        string fileName = $"{email}.csv";
+        string filePath2 = pathToAccountsMap();
+        string fullPath = Path.Combine(filePath2, fileName);
+
+        Console.WriteLine("Enter your password to confirm your identity: ");
+        string inputPassword = Console.ReadLine();
+
+        if (inputPassword == password)
+        {
+            using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
+            {
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    string[] parts = line.Split(',');
+                    if (!line.Contains(email) && parts[4]!=password)
+                    {
+                        listWithoutAccount.Add(line);
+                    }
+                }
+            }
+            using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.Default))
+            {
+                foreach (var line in listWithoutAccount)
+                {
+                    sw.WriteLine(line);
+                }
+            }
+
+            FileInfo fileInf = new FileInfo(fullPath);
+            fileInf.Delete();
+
+            Console.WriteLine("\nIt was a pleasure spending time with you. Best wishes!");
+            return true;
+        }
+        else
+        {
+            Console.WriteLine("Invalid password!");
+            return false;
+        }
+    }
+
+    //Maina paroli
+    public void changePassword()
+    {
+        string filePath = pathToAccountsCsv();
+
+        Console.WriteLine("Enter your password: ");
+        string oldPassword = Console.ReadLine();
+
+        if(oldPassword == password)
+        {
+            Console.WriteLine("Enter your new password: ");
+            string newPassword = Console.ReadLine();
+
+            if (!Regex.IsMatch(newPassword, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])\S{8,}$"))
+            {
+                Console.WriteLine("The password must contain at least one uppercase, lowercase letter and number. The password must be at least 8 characters long.");
+                return;
+            }
+            else
+            {
+                Console.WriteLine("Enter your password a second time: ");
+                string newPassword2 = Console.ReadLine();
+                if (newPassword == newPassword2)
+                {
+                    password = newPassword;
+                    Console.WriteLine("Password changed successfully!");
+
+                }
+                else
+                {
+                    Console.WriteLine("New passwords do not match!");
+                    return;
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine("Incorrect password!");
+            return;
+        }
+      
+        using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
+        {
+            string line;
+
+            while ((line = sr.ReadLine()) != null)
+            {
+                if (line.Contains(email) && line.Contains(oldPassword))
+                {
+                    string[] parts = line.Split(',');
+                    parts[4] = password;
+                    lines.Add(string.Join(",", parts));
+                    passwordChanged = true;
+                }
+                else
+                {
+                    lines.Add(line);
+                }
+            }
+        }
+        if (passwordChanged)
+        {
+            using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.Default))
+            {
+                foreach (var part in lines)
+                {
+                    sw.WriteLine(part);
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine("Incorrect password!");
+        }
     }
 }
