@@ -75,7 +75,7 @@ public class Store
             switch (choice)
             {
                 case "1":
-                    
+
                     file.WriteCardInAccounts(card.CreditCardNumber, card.CardExpirationDate, card.CardCVV, card.Balance);
                     card.EnterCreditCardData();
                     card.SetBalance();
@@ -89,7 +89,7 @@ public class Store
                     shoppingCart.DisplayCart();
                     Console.WriteLine("\nPlease choose an action:\n1.Return to main menu \n2.Remove an item from the cart \n3.Buy an item from the cart");
                     string choise = Console.ReadLine();
-                    switch(choise)
+                    switch (choise)
                     {
                         case "1":
                             break;
@@ -105,16 +105,25 @@ public class Store
                     }
                     continue;
                 case "4":
-                    Console.WriteLine("\nPlease choose an action:\n1.Return to main menu \n2. Change password \n3.Delete account");
+                    Console.WriteLine("\nPlease choose an action:\n1.Return to main menu \n2.Change password \n3.Delete account");
                     string choise2 = Console.ReadLine();
-                    switch(choise2)
+                    switch (choise2)
                     {
                         case "1":
                             break;
                         case "2":
+                            file.changePassword();
                             break;
                         case "3":
-                            break;
+                            bool accountDeleted = file.deleteAccount();
+                            if (accountDeleted)
+                            {
+                                return;
+                            }
+                            else
+                            {
+                                break;
+                            }  
                         default:
                             Console.WriteLine("Inccorect input!");
                             break;
@@ -132,20 +141,21 @@ public class Store
 
     public void DisplayCategories(ShoppingCart shoppingCart)
     {
-       
+
         int categoryNumber;
-        
-        do {
+
+        do
+        {
             Console.WriteLine("Available categories:");
-            
+
             for (int i = 0; i < categories.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {categories[i].Name}");
             }
-            
+
             Console.WriteLine("Enter the category number to view products (or '0' to go back):");
             string input = Console.ReadLine();
-            
+
             if (int.TryParse(input, out categoryNumber) && categoryNumber >= 1 && categoryNumber <= categories.Count)
             {
                 DisplayProductsInCategory(categories[categoryNumber - 1], shoppingCart); // Pass shoppingCart as parameter
@@ -159,7 +169,7 @@ public class Store
             {
                 Console.WriteLine("Invalid category number.");
             }
-        } while (categoryNumber!=0);
+        } while (categoryNumber != 0);
     }
 
     private void DisplayProductsInCategory(Category category, ShoppingCart shoppingCart)
@@ -205,5 +215,5 @@ public class Store
                 Console.WriteLine("Invalid product number.");
             }
         } while (productNumber != 0);
-    }  
+    }
 }
