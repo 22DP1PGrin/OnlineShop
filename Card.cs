@@ -44,7 +44,6 @@ public class Card
                 Console.WriteLine("Wrong expiration date format. Please enter the expiration date again: ");
                 continue;
             }
-
             string[] dateParts = CardExpirationDate.Split('/'); // atdala derīguma termiņa mēnesi no gada
             int expMonth = int.Parse(dateParts[0]);
             int expYear = int.Parse(dateParts[1]);
@@ -82,6 +81,7 @@ public class Card
             }
             else
             {
+                Balance=balance;
                 break;
             }
         }
@@ -94,13 +94,16 @@ public class Card
 
         Console.WriteLine("Do you want to change your card and/or its balance?(Y/N)");
         string choice=Console.ReadLine();
+        
         if (choice.ToLower() == "y")
         {
             EnterCreditCardData();
             SetBalance();
+            
             using (StreamReader sr = new StreamReader(FileName, Encoding.Default))
             {
                 string line;
+                
                 while ((line = sr.ReadLine()) != null)
                 {
                     if (line.Contains(lineToFind))
