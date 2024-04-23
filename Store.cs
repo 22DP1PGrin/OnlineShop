@@ -6,13 +6,13 @@ public class Store
     private List<Category> categories = new List<Category>();
     private Card card;
     private ShoppingCart shoppingCart;
-    private File file;
 
     public Store()
     {
         card = new Card();
         shoppingCart = new ShoppingCart(card);
 
+        // Izveido kategorijas un produktus.
         Category clothing = new Category("Clothing");
         clothing.AddProduct(new Product("T-Shirt", 15.35));
         clothing.AddProduct(new Product("Jeans", 11.97));
@@ -60,6 +60,7 @@ public class Store
         categories.Add(entertainment);
     }
 
+    //Metode, kas parāda veikalu. Lietotājs var iegādāties produktus vai pievienot tos grozam.
     public void DisplayStore()
     {
         Card card = new Card();
@@ -69,17 +70,13 @@ public class Store
         file.writeShoppingCardInList(shoppingCart.products);
         while (true)
         {
-            Console.WriteLine("\nPlease choose an action:\n1. Enter credit card data or change credit card data and/or balance\n2. Display products\n3. Display cart\n4. Account settings\n5. Exit");
+            Console.WriteLine("\nPlease choose an action:\n1. Enter credit card data or change credit card data and/or balance;\n2. Display products;\n3. Display cart;\n4. Account settings;\n5. Exit.");
             string choice = Console.ReadLine();
 
             switch (choice)
             {
                 case "1":
-
-                    file.WriteCardInAccounts(card.CreditCardNumber, card.CardExpirationDate, card.CardCVV, card.Balance);
-                    card.EnterCreditCardData();
-                    card.SetBalance();
-                    file.WriteCardInAccounts(card.CreditCardNumber, card.CardExpirationDate, card.CardCVV, card.Balance);
+                    file.WriteCardInAccounts();
                     break;
                 case "2":
                     DisplayCategories(shoppingCart);
@@ -87,8 +84,9 @@ public class Store
                     break;
                 case "3":
                     shoppingCart.DisplayCart();
-                    Console.WriteLine("\nPlease choose an action:\n1.Return to main menu \n2.Remove an item from the cart \n3.Buy an item from the cart");
+                    Console.WriteLine("\nPlease choose an action:\n1.Return to main menu; \n2.Remove an item from the cart; \n3.Buy an item from the cart.");
                     string choise = Console.ReadLine();
+                    
                     switch (choise)
                     {
                         case "1":
@@ -105,8 +103,9 @@ public class Store
                     }
                     continue;
                 case "4":
-                    Console.WriteLine("\nPlease choose an action:\n1.Return to main menu \n2.Change password \n3.Delete account");
+                    Console.WriteLine("\nPlease choose an action:\n1.Return to main menu; \n2.Change password; \n3.Delete account.");
                     string choise2 = Console.ReadLine();
+                    
                     switch (choise2)
                     {
                         case "1":
@@ -123,7 +122,7 @@ public class Store
                             else
                             {
                                 break;
-                            }  
+                            }
                         default:
                             Console.WriteLine("Inccorect input!");
                             break;
@@ -139,6 +138,7 @@ public class Store
         }
     }
 
+    //Metode, kas ļauj izvēlēties kategoriju un pēc tam izvēlēties produktu.
     public void DisplayCategories(ShoppingCart shoppingCart)
     {
 
@@ -158,7 +158,7 @@ public class Store
 
             if (int.TryParse(input, out categoryNumber) && categoryNumber >= 1 && categoryNumber <= categories.Count)
             {
-                DisplayProductsInCategory(categories[categoryNumber - 1], shoppingCart); // Pass shoppingCart as parameter
+                DisplayProductsInCategory(categories[categoryNumber - 1], shoppingCart); 
 
             }
             else if (input == "0")
@@ -172,16 +172,18 @@ public class Store
         } while (categoryNumber != 0);
     }
 
+   //Metode, kas ļauj izvēlēties produktu un pēc tam izvēlēties, vai to pirkt vai pievienot grozam.
     private void DisplayProductsInCategory(Category category, ShoppingCart shoppingCart)
     {
         int productNumber;
+        
         do
         {
             Console.WriteLine($"Products in {category.Name}:");
             int counter = 1;
             foreach (var product in category.Products)
             {
-                Console.WriteLine($"{counter}. {product.Name} - €{product.Price}");
+                Console.WriteLine($"{counter}. {product.Name} - {product.Price} EUR");
                 counter++;
             }
 
