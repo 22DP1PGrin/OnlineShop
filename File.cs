@@ -6,37 +6,34 @@ public class File
 {
     string email = "";
     string password = "";
-   
-    List<string> lines = new List<string>();
-    bool passwordChanged = false;
 
-    List<string> listWithoutAccount = new List<string>();
-    bool passwordTrue = false;
     Card card = new Card();
 
-    //Metode, kas atrod ceļu uz failu Accounts.csv
+    //Metode, kas atrod ceļu uz failu Accounts.csv.
     public string pathToAccountsCsv()
     {
-        //Iegūstiet darba direktoriju
+        //Iegūstiet darba direktoriju.
         string currentDirectory = Directory.GetCurrentDirectory();
 
         // Paceļas par 2 līmeņiem uz augšu, lai sasniegt projekta saknes direktoriju.
         string projectDirectory = Directory.GetParent(currentDirectory).Parent.Parent.FullName;
 
-        //Ģenerē pilnu ceļu uz failu Accounts.csv projekta saknē
-        string filePath = Path.Combine(projectDirectory, "Accounts.csv");
-
+        //Ģenerē pilnu ceļu uz failu Accounts.csv projekta saknē.
+        string filePath = Path.Combine( projectDirectory,"Accounts.csv");
         return filePath;
     }
+    
+    //Metode, kas atrod ceļu uz mapes Accounts.
     public string pathToAccountsMap()
     {
-        //Atrod darba direktoriju
+        //Atrod darba direktoriju.
         string currentDirectory = Directory.GetCurrentDirectory();
-        // Paceļas par 3 līmeņiem uz augšu, lai sasniegtu projekta saknes direktoriju
+        
+        // Paceļas par 3 līmeņiem uz augšu, lai sasniegtu projekta saknes direktoriju.
         string projectDirectory = Directory.GetParent(Directory.GetParent(Directory.GetParent(currentDirectory).FullName).FullName).FullName;
-        //Ģenerē pilnu ceļu uz failu
+        
+        //Ģenerē pilnu ceļu uz failu.
         string filePath = Path.Combine(projectDirectory, "Accounts");
-
         return filePath;
     }
 
@@ -56,7 +53,6 @@ public class File
     public void CreateAccounts()
     {
         string filePath = pathToAccountsCsv();
-
         string filePath2 = pathToAccountsMap();
 
         using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
@@ -71,16 +67,14 @@ public class File
                 string fullFilePath = Path.Combine(filePath2, fileName);
 
                 FileInfo fileInf = new FileInfo(fullFilePath);
-
                 if (!fileInf.Exists)
                 {
-                    using (FileStream fs = fileInf.Create())
-                    {
-                    }
+                    using (FileStream fs = fileInf.Create()){ }     
                 }
             }
         }
     }
+    
     // Metode, kas pārbauda, vai lietotājs ir reģistrējies.
     public void LogIn()
     {
@@ -89,13 +83,14 @@ public class File
         while (true)
         {
             CreateAccounts();
+
+            string filePath = pathToAccountsCsv();
+
             Console.WriteLine("\nTo log in, enter your email and password!\n");
-            Console.WriteLine("Enter your email! ");
+            Console.WriteLine("Enter your email: ");
             email = Console.ReadLine();
             Console.WriteLine("Enter your password: ");
             password = Console.ReadLine();
-
-            string filePath = pathToAccountsCsv();
 
             using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
             {
@@ -122,8 +117,8 @@ public class File
             {
                 Console.WriteLine("Invalid email or password. Try again!\n");
 
-                Registration obj = new Registration();
-                obj.Register();
+                Registration account = new Registration();
+                account.Register();
             }
             else
             {
@@ -165,7 +160,7 @@ public class File
         {
             card.EnterCreditCardData();
             card.SetBalance();
-        
+            
             using (StreamWriter sw = new StreamWriter(fullPath, true, Encoding.Default))
             {
                 string line = $"Card data;{card.CreditCardNumber};{card.CardExpirationDate};{card.CardCVV};{Balance}\n";
@@ -178,18 +173,18 @@ public class File
         }
     }
 
-    //Ieraksta preces vajadzīgajā failā, saglabājot kartes datus un nedublējot sarakstus
+    //Ieraksta preces vajadzīgajā failā, saglabājot kartes datus un nedublējot sarakstus.
     public void WriteShoppingCartInAccounts(List<Product> products)
     {
         string fileName = $"{email}.csv";
         string filePath2 = pathToAccountsMap();
         string fullPath = Path.Combine(filePath2, fileName);
+        
         List<string> existingLines = new List<string>();
 
         using (StreamReader sr = new StreamReader(fullPath))
         {
             string line;
-            List<string> updatedLines = new List<string>();
 
             while ((line = sr.ReadLine()) != null)
             {
@@ -213,7 +208,7 @@ public class File
         }
     }
 
-    //Ieraksta produktus no vajadzīgā failā bez kartes datiem
+    //Ieraksta produktus no vajadzīgā failā bez kartes datiem.
     public void writeShoppingCardInList(List<Product> products)
     {
         string fileName = $"{email}.csv";
@@ -268,14 +263,15 @@ public class File
         return 0.0;
     }
 
-    //Dzēš kontu un ieraksta par to
+    //Dzēš kontu(failu) un ieraksta par to csv failā.
     public bool deleteAccount()
     {
         string filePath = pathToAccountsCsv();
-
         string fileName = $"{email}.csv";
         string filePath2 = pathToAccountsMap();
         string fullPath = Path.Combine(filePath2, fileName);
+
+        List<string> listWithoutAccount = new List<string>();
 
         Console.WriteLine("Enter your password to confirm your identity: ");
         string inputPassword = Console.ReadLine();
@@ -285,10 +281,12 @@ public class File
             using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
             {
                 string line;
+                
                 while ((line = sr.ReadLine()) != null)
                 {
                     string[] parts = line.Split(',');
-                    if (!line.Contains(email) && parts[4]!=password)
+                    
+                    if (!line.Contains(email) && parts[4] != password)
                     {
                         listWithoutAccount.Add(line);
                     }
@@ -315,15 +313,19 @@ public class File
         }
     }
 
-    //Maina paroli
+    //Maina paroli ar visām nepieciešamajām prasībām.
     public void changePassword()
     {
         string filePath = pathToAccountsCsv();
+        
+        bool passwordChanged = false;
+        List<string> Accounts = new List<string>();
+        Accounts.Clear();
 
-        Console.WriteLine("Enter your password: ");
+        Console.WriteLine("\nEnter your password: ");
         string oldPassword = Console.ReadLine();
 
-        if(oldPassword == password)
+        if (oldPassword == password)
         {
             Console.WriteLine("Enter your new password: ");
             string newPassword = Console.ReadLine();
@@ -335,8 +337,9 @@ public class File
             }
             else
             {
-                Console.WriteLine("Enter your password a second time: ");
+                Console.WriteLine("Enter your new password a second time: ");
                 string newPassword2 = Console.ReadLine();
+                
                 if (newPassword == newPassword2)
                 {
                     password = newPassword;
@@ -355,23 +358,22 @@ public class File
             Console.WriteLine("Incorrect password!");
             return;
         }
-      
         using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
         {
             string line;
-
+ 
             while ((line = sr.ReadLine()) != null)
             {
                 if (line.Contains(email) && line.Contains(oldPassword))
                 {
                     string[] parts = line.Split(',');
                     parts[4] = password;
-                    lines.Add(string.Join(",", parts));
+                    Accounts.Add(string.Join(",", parts));
                     passwordChanged = true;
                 }
                 else
                 {
-                    lines.Add(line);
+                    Accounts.Add(line);
                 }
             }
         }
@@ -379,7 +381,7 @@ public class File
         {
             using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.Default))
             {
-                foreach (var part in lines)
+                foreach (var part in Accounts)
                 {
                     sw.WriteLine(part);
                 }
