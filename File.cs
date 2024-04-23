@@ -134,7 +134,7 @@ public class File
     }
 
     //Metode, kas ieraksta kartes datus kontu failos.
-    public void WriteCardInAccounts(string Number, string ExpirationDate, string CVV, double Balance)
+    public void WriteCardInAccounts()
     {
 
         string fileName = $"{email}.csv";
@@ -155,7 +155,7 @@ public class File
                     if (parts.Contains(lineToFind))
                     {
                         CardExist = true;
-                        Console.WriteLine("The card is already linked!");
+                        Console.WriteLine("\nThe card is already linked!");
                         break;
                     }
                 }
@@ -163,12 +163,14 @@ public class File
         }
         if (!CardExist)
         {
+            card.EnterCreditCardData();
+            card.SetBalance();
+        
             using (StreamWriter sw = new StreamWriter(fullPath, true, Encoding.Default))
             {
-                string line = $"Card data;{Number};{ExpirationDate};{CVV};{Balance}\n";
+                string line = $"Card data;{card.CreditCardNumber};{card.CardExpirationDate};{card.CardCVV};{Balance}\n";
                 sw.WriteLine(line);
             }
-            card.Balance = Balance;
         }
         else
         {
