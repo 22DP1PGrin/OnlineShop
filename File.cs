@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 public class File
 {
     string email = "";
@@ -12,28 +13,14 @@ public class File
     //Metode, kas atrod ceļu uz failu Accounts.csv.
     public string pathToAccountsCsv()
     {
-        //Iegūstiet darba direktoriju.
-        string currentDirectory = Directory.GetCurrentDirectory();
-
-        // Paceļas par 2 līmeņiem uz augšu, lai sasniegt projekta saknes direktoriju.
-        string projectDirectory = Directory.GetParent(currentDirectory).Parent.Parent.FullName;
-
-        //Ģenerē pilnu ceļu uz failu Accounts.csv projekta saknē.
-        string filePath = Path.Combine( projectDirectory,"Accounts.csv");
+        string filePath = "Accounts.csv";
         return filePath;
     }
     
     //Metode, kas atrod ceļu uz mapes Accounts.
     public string pathToAccountsMap()
     {
-        //Atrod darba direktoriju.
-        string currentDirectory = Directory.GetCurrentDirectory();
-        
-        // Paceļas par 3 līmeņiem uz augšu, lai sasniegtu projekta saknes direktoriju.
-        string projectDirectory = Directory.GetParent(Directory.GetParent(Directory.GetParent(currentDirectory).FullName).FullName).FullName;
-        
-        //Ģenerē pilnu ceļu uz failu.
-        string filePath = Path.Combine(projectDirectory, "Accounts");
+        string filePath = "Accounts";
         return filePath;
     }
 
@@ -98,7 +85,7 @@ public class File
 
                 while ((line = sr.ReadLine()) != null)
                 {
-                    string[] parts = line.Split(',');
+                  List<string> parts = new List<string>(line.Split(','));
 
                     if (parts.Contains(email))
                     {
