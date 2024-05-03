@@ -4,4 +4,3 @@ Lai palaistu programmu, lietotājam ir nepieciešams koda redaktors. Instrukcij�
 
 ##### 1. Pēc redaktora atvēršanas lietotājam vispirms jāreģistrējas. Lai to izdarītu, noklikšķiniet uz pogas ***Sign up to code in C#***.
 
-![The San Juan Mountains are beautiful!](/assets/images/san-juan-mountains.jpg "San Juan Mountains")
