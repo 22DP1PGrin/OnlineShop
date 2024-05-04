@@ -1,5 +1,4 @@
 using System;
-using System.Text.RegularExpressions;
 
 public class Registration
 {
@@ -13,10 +12,12 @@ public class Registration
         while (true)
         {
             Console.WriteLine("Enter \"Sign in\" to register or \"Log in\" to log in.");
+            
             string Choice = Console.ReadLine();
 
             if (Choice.ToLower() == "sign in")
             {
+                // Izsauc metodes, kurās tiek ievadīti un pārbaudīti nepieciešamie dati.
                 user.name();
                 user.surname();
                 user.email();
