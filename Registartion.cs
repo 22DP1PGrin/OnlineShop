@@ -7,11 +7,11 @@ public class Registration
     // Metode, kas ļauj lietotājam reģistrēties.
     public void Register()
     {
-        Console.WriteLine("Welcome to the store \"The Chuckle Cart\". To continue working, you must log in to your account.\nDon't have an account? Register!\n");
+        Console.WriteLine("Welcome to the store \"The Chuckle Cart\". To continue working, you must log in to your account.\nDon't have an account? Register!");
 
         while (true)
         {
-            Console.WriteLine("Enter \"Sign in\" to register or \"Log in\" to log in.");
+            Console.WriteLine("\nEnter \"Sign in\" to register or \"Log in\" to log in.");
             
             string Choice = Console.ReadLine();
 
