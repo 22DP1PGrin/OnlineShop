@@ -2,8 +2,9 @@
 
 Lai palaistu programmu, jums ir nepieciešams koda redaktors. Instrukcijā sīki aprakstītas visas darbības programmas palaišanai tiešsaistes [**Replit**](https://replit.com/languages/csharp) koda redaktorā.
 
-1. Pēc redaktora atvēršanas jums jāreģistrējas. Lai to izdarītu, noklikšķiniet uz pogas ***Sign up to code in C#***.
-2. Vietne liks jums pieteikties, izmantojot **Google**, **Github**, vai **e-pastu**. Izvēlieties atbilstošo opciju. Ja jums jau ir konts, tad pašā apakšā varat izvēlēties iespēju **log in**.
+1. Lai sāktu, sekojiet pievienotajai saitei.
+2. Pēc redaktora atvēršanas jums jāreģistrējas. Lai to izdarītu, noklikšķiniet uz pogas ***Sign up to code in C#***.
+3. Vietne liks jums pieteikties, izmantojot **Google**, **Github**, vai **e-pastu**. Izvēlieties atbilstošo opciju. Ja jums jau ir konts, tad pašā apakšā varat izvēlēties iespēju **log in**.
 
 # Ja esat pieteicies pirmo reizi.
 1. Ja tikko izveidojāt savu kontu, *Replit* jums tiks lūgts norādīt, kāda pieredze jums ir un kā jūs plānojat to izmantot. Izvēlieties **atbilstošās opcijas** un noklikšķiniet uz **Start building**.
